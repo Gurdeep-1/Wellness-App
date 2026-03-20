@@ -600,7 +600,7 @@ function ChatTab({ cycleInfo }) {
 
       while (retries > 0) {
         try {
-          const res = await fetch(`AIzaSyDms-d8PiZfaIr5KNBi6ujdRNkdXCvsvJk`, {
+          const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=AIzaSyDms-d8PiZfaIr5KNBi6ujdRNkdXCvsvJk`, {
             method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
           });
           if (!res.ok) throw new Error();
