@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 
 // --- Configuration & Initialization ---
-const apiKey = ""; // API key is injected by the execution environment
+const apiKey = "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"; // API key is injected by the execution environment
 
 // --- Utility Functions ---
 const addDays = (date, days) => {
