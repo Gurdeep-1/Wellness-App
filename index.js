@@ -600,9 +600,33 @@ function ChatTab({ cycleInfo }) {
 
       while (retries > 0) {
         try {
-          const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=AIzaSyDms-d8PiZfaIr5KNBi6ujdRNkdXCvsvJk`, {
-            method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
-          });
+         const res = await fetch(
+  `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=AIzaSyDms-d8PiZfaIr5KNBi6ujdRNkdXCvsvJk`,
+  {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [
+        ...messages.map(m => ({
+          role: m.role === 'model' ? 'model' : 'user',
+          parts: [{ text: m.text }]
+        })),
+        { role: 'user', parts: [{ text: input }] }
+      ]
+    })
+  }
+);
+
+const data = await res.json();
+
+const reply =
+  data?.candidates?.[0]?.content?.parts?.[0]?.text ||
+  "No response";
+
+setMessages(prev => [
+  ...prev,
+  { role: 'model', text: reply }
+]);
           if (!res.ok) throw new Error();
           data = await res.json();
           break;
